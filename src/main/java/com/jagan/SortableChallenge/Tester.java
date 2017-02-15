@@ -1,11 +1,6 @@
 package com.jagan.SortableChallenge;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 import com.jagan.SortableChallenge.utils.Sort;
 
@@ -26,7 +21,10 @@ public class Tester {
 
 		try {
 
+			//sort products file
 			Sort.externalSort(productsPath, productsOutputPath, productsKey);
+			
+			//match product records with listing records in ascending order using priority queue on listing records
 			Sort.matchListings(listingsPath, matchingsOutputPath, listingsKey, productsOutputPath);
 			
 		} catch (Exception e) {

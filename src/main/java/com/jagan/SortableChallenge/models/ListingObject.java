@@ -3,8 +3,10 @@ package com.jagan.SortableChallenge.models;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 public class ListingObject {
 
@@ -12,12 +14,14 @@ public class ListingObject {
 	private String title;
 	private JSONArray listings;
 	private List<String> recordsArrayList;
+	private JSONParser parser;
 
 	public ListingObject() {
 		record = new JSONObject();
 		title = "";
 		listings = new JSONArray();
 		recordsArrayList = new ArrayList<String>();
+		parser = new JSONParser();
 	}
 
 	public ListingObject(String title) {
@@ -25,6 +29,7 @@ public class ListingObject {
 		this.title = title;
 		listings = new JSONArray();
 		recordsArrayList = new ArrayList<String>();
+		parser = new JSONParser();
 	}
 
 	public void addRecordToArrayList(String record) {
@@ -35,11 +40,30 @@ public class ListingObject {
 		return this.recordsArrayList;
 	}
 
-	public JSONObject finalizeListings() {
-		listings.put(getRecordsArrayList());
-		record.put("title", title);
-		record.put("listings", recordsArrayList);
+	public JSONObject finalizeListings() throws ParseException {
+
+		// create jsonobject from jsonstring and add it to jsonarray
+		for (String i : getRecordsArrayList()) {
+			listings.add(itemize(i));
+		}
+
+		record.put("product_name", title);
+		record.put("listings", listings);
 		return record;
+	}
+
+	// to create jsonobject from jsonstring
+	public JSONObject itemize(String json) throws ParseException {
+
+		JSONObject itemized = new JSONObject();
+
+		JSONObject rawObj = (JSONObject) parser.parse(json);
+		itemized.put("title", rawObj.get("title"));
+		itemized.put("manufacturer", rawObj.get("manufacturer"));
+		itemized.put("currency", rawObj.get("currency"));
+		itemized.put("price", rawObj.get("price"));
+
+		return itemized;
 	}
 
 	public void reset() {
@@ -47,6 +71,7 @@ public class ListingObject {
 		title = "";
 		listings = new JSONArray();
 		recordsArrayList.clear();
+		parser = new JSONParser();
 	}
 
 	public boolean hasTitle() {
@@ -72,7 +97,7 @@ public class ListingObject {
 	}
 
 	public void setTitle(String title) {
-		this.title=title;
+		this.title = title;
 	}
 
 	public JSONArray getListings() {
