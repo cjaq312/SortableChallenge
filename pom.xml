@@ -49,7 +49,7 @@
 					</descriptorRefs>
 					<archive>
 						<manifest>
-							<mainClass>fully.qualified.MainClass</mainClass>
+							<mainClass>com.jagan.SortableChallenge.Tester</mainClass>
 						</manifest>
 					</archive>
 				</configuration>

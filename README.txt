@@ -1,8 +1,15 @@
 HOW TO RUN:
 1. Clone the github repo to local machine
-2. Build the project using Maven
-3. Run Tester.java
-4. See the output in \data\outputData
+2. Move in to the project folder (cd SortableChallenge)
+3. run go.sh
+4. See the output in "./data/outputData/productListingsOutput.txt"
+
+(OR)
+
+1. Clone the github repo to local machine
+2. Build the project using Maven "mvn clean compile assembly:single" "mvn install"
+3. Run "java -jar ./target/Sortable-0.0.1-jar-with-dependencies.jar com.jagan.SortableChallenge.Tester"
+4. See the output in "./data/outputData/productListingsOutput.txt"
 
 
 ALGORITHM:
